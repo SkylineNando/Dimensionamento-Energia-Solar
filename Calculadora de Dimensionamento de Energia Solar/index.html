@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Energia Solar</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+}
+
+h1 {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#resultado {
+    margin-top: 20px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Calculadora de Dimensionamento de Energia Solar</h1>
+
+    <label for="consumo-mensal">Consumo Médio Mensal (em kWh):</label>
+    <input type="number" id="consumo-mensal" step="0.01" min="0">
+    <br>
+    <label for="horas-solar">Horas de Sol Diárias:</label>
+    <input type="number" id="horas-solar" step="0.01" min="0">
+    <br>
+    <label for="potencia-painel">Potência do Painel Solar:</label>
+    <select id="potencia-painel">
+        <option value="340">340W</option>
+        <option value="540">540W</option>
+        <option value="580">580W</option>
+        <option value="660">660W</option>
+        <option value="665">665W</option>
+    </select>
+    <br>
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+function calcular() {
+    var consumoMensal = parseFloat(document.getElementById('consumo-mensal').value);
+    var horasSolar = parseFloat(document.getElementById('horas-solar').value);
+    var potenciaPainel = parseInt(document.getElementById('potencia-painel').value);
+    
+    // Potência diária de um painel solar típico (kWh)
+    var potenciaPainelDiaria = potenciaPainel * horasSolar / 1000;
+    
+    // Potência média diária necessária (kWh)
+    var potenciaMediaDiariaNecessaria = consumoMensal / 30;
+    
+    // Quantidade de painéis necessários
+    var quantidadePaineis = Math.ceil(potenciaMediaDiariaNecessaria / potenciaPainelDiaria);
+    
+    var resultado = document.getElementById('resultado');
+    resultado.innerHTML = "Quantidade de Painéis Necessários: " + quantidadePaineis;
+}
+</script>
+
+</body>
+</html>
