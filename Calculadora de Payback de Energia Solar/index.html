@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Payback de Energia Solar</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+}
+
+h1 {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#resultado {
+    margin-top: 20px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Calculadora de Payback de Energia Solar</h1>
+
+    <label for="valor-investimento">Valor do Investimento (em R$):</label>
+    <input type="number" id="valor-investimento" step="0.01" min="0">
+    <br>
+    <label for="energia-gerada">Energia Gerada (em kWh):</label>
+    <input type="number" id="energia-gerada" step="0.01" min="0">
+    <br>
+    <label for="tarifa">Tarifa de Energia (em R$/kWh):</label>
+    <input type="number" id="tarifa" step="0.01" min="0">
+    <br>
+    <button onclick="calcularPayback()">Calcular Payback</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+function calcularPayback() {
+    var valorInvestimento = parseFloat(document.getElementById('valor-investimento').value);
+    var energiaGerada = parseFloat(document.getElementById('energia-gerada').value);
+    var tarifa = parseFloat(document.getElementById('tarifa').value);
+    
+    var paybackMeses = (valorInvestimento / (energiaGerada * 12 * tarifa)) * 12;
+    var anos = Math.floor(paybackMeses / 12);
+    var meses = Math.round(paybackMeses % 12);
+    
+    var resultado = document.getElementById('resultado');
+    
+    if (anos === 0 && meses > 0) {
+        resultado.innerHTML = "O payback é de aproximadamente " + meses + " meses.";
+    } else if (anos > 0 && meses === 0) {
+        resultado.innerHTML = "O payback é de aproximadamente " + anos + " anos.";
+    } else {
+        resultado.innerHTML = "O payback é de aproximadamente " + anos + " anos e " + meses + " meses.";
+    }
+}
+</script>
+
+</body>
+</html>
